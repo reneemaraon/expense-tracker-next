@@ -27,7 +27,7 @@ const ExpenseItem = ({ value, text }: ExpenseDetails) => (
 
 const ExpenseSummary = () => {
   return (
-    <div className="w-full max-w-[400px] center-col gap-7 px-5 py-8 rounded-[30px] bg-gradient-to-br from-[#2DABE4] via-[#C966FE] to-[#FE8F5F]">
+    <div className="w-full max-w-[400px] center-col gap-7 px-5 py-8 rounded-[30px] main-gradient">
       <div className="text-white center-col gap-2.5">
         <p className="text-base">Total Balance</p>
         <p className="w-full text-nowrap text-[40px] leading-[100%] text-white font-bold">

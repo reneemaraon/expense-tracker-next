@@ -5,3 +5,7 @@
 .center-col {
   @apply flex flex-col items-center;
 }
+
+.main-gradient {
+  @apply bg-gradient-to-br from-[#2DABE4] via-[#C966FE] to-[#FE8F5F];
+}

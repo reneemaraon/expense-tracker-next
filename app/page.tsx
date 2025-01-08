@@ -1,7 +1,5 @@
 import { Cog } from "@/assets/Icons";
 
-import ExpenseSummary from "@/components/Expense/ExpenseSummary";
-import TransactionList from "@/components/Expense/TransactionList";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -47,8 +45,6 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <ExpenseSummary />
-      <TransactionList />
     </div>
   );
 }

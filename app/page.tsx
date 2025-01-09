@@ -17,10 +17,6 @@ export default async function Home() {
     redirect("/login");
   }
 
-  console.log(data);
-  console.log("user");
-  console.log(user);
-
   return (
     <div className="w-full center-col gap-8">
       <div className="w-full flex">

@@ -9,3 +9,22 @@
 .main-gradient {
   @apply bg-gradient-to-br from-[#2DABE4] via-[#C966FE] to-[#FE8F5F];
 }
+
+.main-gradient-hover {
+  @apply hover:bg-gradient-to-br hover:from-[#2daae4b5] hover:via-[#c966feaf] hover:to-[#fe8f5fab];
+}
+
+body {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+.text-gradient {
+  @apply bg-gradient-to-br from-[#2DABE4] via-[#C966FE] to-[#FE8F5F];
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

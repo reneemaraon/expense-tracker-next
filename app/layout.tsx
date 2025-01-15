@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
       </head>
       <body>
         <div className="w-full min-h-screen font-inter center-col bg-darker-bg leading-[100%]">
-          <div className="px-7 py-7 max-w-[800px] h-screen w-full bg-white-bg center-col">
+          <div className="p-5 sm:p-7 max-w-[800px] min-h-screen w-full bg-white-bg center-col">
             {children}
           </div>
         </div>

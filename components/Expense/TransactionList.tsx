@@ -1,33 +1,17 @@
+import { createClient } from "@/utils/supabase/server";
 import TransactionItem from "../TransactionItem";
 
-const transactions = [
-  {
-    id: 1,
-    description: "Grocery Shopping",
-    category: "Food",
-    amount: 75.5,
-    date: "2024-12-21",
-    type: "Expense",
-  },
-  {
-    id: 2,
-    description: "Salary",
-    category: "Income",
-    amount: 2500.0,
-    date: "2024-12-20",
-    type: "Income",
-  },
-  {
-    id: 3,
-    description: "Electricity Bill",
-    category: "Utilities",
-    amount: 120.0,
-    date: "2024-12-18",
-    type: "Expense",
-  },
-];
+const TransactionList = async () => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: transactions, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("user_id", user?.id)
+    .order("date", { ascending: false });
 
-const TransactionList = () => {
   return (
     <div className="max-w-[540px] flex flex-col w-full gap-6">
       <div className="w-full flex">
@@ -37,8 +21,13 @@ const TransactionList = () => {
         <p className="text-sm leading-[100%] text-light-gray-text">Today</p>
       </div>
       <div className="w-full flex-col flex gap-5">
-        {transactions.map((transaction) => (
-          <TransactionItem key={transaction.id} />
+        {transactions?.map((transaction) => (
+          <TransactionItem
+            category={transaction.category}
+            key={transaction.id}
+            amount={transaction.amount}
+            date={transaction.date}
+          />
         ))}
       </div>
     </div>

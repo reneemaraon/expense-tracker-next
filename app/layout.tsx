@@ -1,17 +1,14 @@
+// app/layout.tsx (Server Component)
 import "@/styles/globals.css";
-
 import { ReactNode } from "react";
-
-interface Props {
-  children?: ReactNode;
-}
+import ClientLayout from "@/components/common/ClientLayout";
 
 export const metadata = {
   title: "Expense Tracker",
   description: "A demo expense tracker with oauth",
 };
 
-const Layout = ({ children }: Props) => {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -27,14 +24,8 @@ const Layout = ({ children }: Props) => {
         />
       </head>
       <body>
-        <div className="w-full min-h-screen font-inter center-col bg-darker-bg leading-[100%]">
-          <div className="p-5 sm:p-7 max-w-[800px] min-h-screen w-full bg-white-bg center-col">
-            {children}
-          </div>
-        </div>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
-};
-
-export default Layout;
+}

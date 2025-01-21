@@ -3,6 +3,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Transaction } from "@/lib/interface";
 import { AddTransactionData } from "@/app/transactions/add/page";
@@ -31,7 +32,7 @@ export async function addTransaction(formData: AddTransactionData) {
     throw new Error(error.message);
   }
 
-  revalidatePath("/");
+  redirect("/");
 }
 
 export async function editTransaction(transaction: Transaction) {

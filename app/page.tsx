@@ -19,7 +19,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="w-full center-col gap-8 h-screen relative">
+    <div className="w-full center-col gap-8 relative">
       <div className="fixed object-center bottom-10">
         <Link
           href="/transactions/add"

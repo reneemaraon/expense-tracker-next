@@ -8,6 +8,7 @@ interface TextInputProps {
   placeholder: string;
   icon?: boolean;
   children: ReactNode;
+  error?: string;
 }
 
 const TextInput = ({
@@ -17,6 +18,7 @@ const TextInput = ({
   placeholder,
   icon,
   children,
+  error,
 }: TextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -41,7 +43,10 @@ const TextInput = ({
   };
 
   return (
-    <div onClick={focusInput} className="cursor-text w-full center-col">
+    <div
+      onClick={focusInput}
+      className="cursor-text w-full flex flex-col gap-2"
+    >
       <div
         className={`${
           isFocused ? "border-brand-orange" : "border-transparent"
@@ -67,7 +72,7 @@ const TextInput = ({
           onBlur={handleBlur}
         />
       </div>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 };

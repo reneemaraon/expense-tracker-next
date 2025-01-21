@@ -6,6 +6,7 @@ interface SelectionProps {
   children: ReactNode;
   icon?: boolean;
   placeholder: string;
+  error?: string;
   value: { name: string; value: any };
 }
 
@@ -15,6 +16,7 @@ const SelectInput = ({
   options,
   icon = false,
   children,
+  error,
 }: SelectionProps) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -38,44 +40,47 @@ const SelectInput = ({
   }, []);
 
   return (
-    <div
-      onClick={toggleDropdown}
-      ref={dropdownRef}
-      className="relative hover:cursor-pointer w-full"
-    >
+    <div className="w-full flex-col flex gap-2">
       <div
-        className={`${
-          isDropdownVisible ? "border-brand-orange" : "border-transparent"
-        } ${
-          !valueSelected && "text-light-gray-text"
-        } border bg-white w-full relative max-w-[500px] rounded-lg h-14 px-6 py-1.5 items-center gap-5 flex`}
+        onClick={toggleDropdown}
+        ref={dropdownRef}
+        className="relative hover:cursor-pointer w-full"
       >
-        {icon && (
-          <div
-            className={`w-5 ${
-              isDropdownVisible ? "text-brand-orange" : "text-light-gray-text"
-            }`}
-          >
-            {children}
+        <div
+          className={`${
+            isDropdownVisible ? "border-brand-orange" : "border-transparent"
+          } ${
+            !valueSelected && "text-light-gray-text"
+          } border bg-white w-full relative max-w-[500px] rounded-lg h-14 px-6 py-1.5 items-center gap-5 flex`}
+        >
+          {icon && (
+            <div
+              className={`w-5 ${
+                isDropdownVisible ? "text-brand-orange" : "text-light-gray-text"
+              }`}
+            >
+              {children}
+            </div>
+          )}
+          {valueSelected ? value.name : placeholder}
+        </div>
+
+        {isDropdownVisible && (
+          <div className="absolute w-full top-full left-0 mt-1 z-40">
+            <Dropdown>
+              {options.map((option) => (
+                <Option
+                  key={option.text}
+                  text={option.text}
+                  selected={option.selected}
+                  onSelect={option.onSelect}
+                />
+              ))}
+            </Dropdown>
           </div>
         )}
-        {valueSelected ? value.name : placeholder}
       </div>
-
-      {isDropdownVisible && (
-        <div className="absolute w-full top-full left-0 mt-1 z-40">
-          <Dropdown>
-            {options.map((option) => (
-              <Option
-                key={option.text}
-                text={option.text}
-                selected={option.selected}
-                onSelect={option.onSelect}
-              />
-            ))}
-          </Dropdown>
-        </div>
-      )}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 };

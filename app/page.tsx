@@ -2,6 +2,7 @@ import { AddIcon, Cog } from "@/assets/Icons";
 
 import ExpenseSummary from "@/components/Expense/ExpenseSummary";
 import TransactionList from "@/components/Expense/TransactionList";
+import TopMenu from "@/components/Home/TopMenu";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -48,11 +49,7 @@ export default async function Home() {
             </p>
           </div>
         </div>
-        <div className="w-9 h-9 center-col justify-center rounded-lg bg-white">
-          <div className="w-5 h-5 text-light-gray-text icon">
-            <Cog />
-          </div>
-        </div>
+        <TopMenu />
       </div>
       <ExpenseSummary />
       <TransactionList />

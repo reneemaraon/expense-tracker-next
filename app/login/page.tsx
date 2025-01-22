@@ -11,13 +11,13 @@ export default async function Login() {
 
   return (
     <div className="w-full center-col gap-8">
-      <div className="w-full gap-3 flex items-center">
-        <div className="flex flex-col gap-1.5">
-          <p className="text-xs leading-[100%] text-light-gray-text font-bold">
+      <div className="w-full gap-3 flex pt-10 items-center">
+        <div className="center-col w-full gap-4">
+          <p className="font-medium leading-[100%] text-light-gray-text ">
             Welcome!
           </p>
-          <p className="text-base leading-[100%] text-dark-text font-bold">
-            Please Login
+          <p className="mb-20 text-base leading-[100%] text-dark-text font-bold">
+            Please Login to start Expense Tracker
           </p>
         </div>
       </div>

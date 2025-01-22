@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import CustomButton from "../common/Button";
 
 const GoogleLogin = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
@@ -30,9 +31,9 @@ const GoogleLogin = () => {
     }
   }
   return (
-    <div
+    <CustomButton
       onClick={signInWithGoogle}
-      className="w-full h-12 flex gap-4 items-center justify-center main-gradient text-white rounded-full max-w-[400px] cursor-pointer"
+      // className="w-full h-12 flex gap-4 items-center justify-center main-gradient text-white rounded-full max-w-[400px] cursor-pointer"
     >
       <Image
         src="https://authjs.dev/img/providers/google.svg"
@@ -42,7 +43,7 @@ const GoogleLogin = () => {
         className="mr-2"
       />
       {isGoogleLoading ? "Please wait..." : "Login with Google"}
-    </div>
+    </CustomButton>
   );
 };
 

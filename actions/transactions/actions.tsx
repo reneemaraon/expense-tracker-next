@@ -99,19 +99,3 @@ export async function deleteAllTransactions() {
 
   revalidatePath("/");
 }
-
-export async function onCheckChange(transaction: Transaction) {
-  const supabase = createClient();
-
-  const { error } = await supabase
-    .from("transactions")
-    .update({ is_complete: !transaction?.is_complete })
-    .eq("id", transaction?.id)
-    .select();
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  revalidatePath("/");
-}

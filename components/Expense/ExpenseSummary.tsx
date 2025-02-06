@@ -54,7 +54,7 @@ const ExpenseSummary = async () => {
         <p className="text-base">Total Balance</p>
         <p className="w-full text-nowrap text-[40px] leading-[100%] text-white font-bold">
           {data[0] &&
-            `${data[0].total_balance < 0 && "-"}$${Math.abs(
+            `${data[0].total_balance < 0 ? "-" : ""}$${Math.abs(
               data[0].total_balance || 0
             ).toFixed(2)}`}
         </p>

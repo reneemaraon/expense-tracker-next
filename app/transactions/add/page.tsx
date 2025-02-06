@@ -8,6 +8,7 @@ import CustomButton from "@/components/common/Button";
 import SelectInput from "@/components/common/SelectInput";
 import { DateTimePicker } from "@/components/AddExpense/TimeSelect";
 import { addTransaction } from "@/actions/transactions/actions";
+import { useSearchParams } from "next/navigation";
 
 interface CategoryOption {
   name: string;
@@ -21,11 +22,18 @@ export interface AddTransactionData {
   amount: number;
 }
 
-const CATEGORIES = [
+const EXPENSE_CATEGORIES = [
   { name: "Food", value: "food" },
   { name: "Shopping", value: "shopping" },
   { name: "Travel", value: "travel" },
   { name: "Bills", value: "bills" },
+  { name: "Other", value: "other" },
+];
+
+const INCOME_CATEGORIES = [
+  { name: "Salary", value: "salary" },
+  { name: "Allowance", value: "allowance" },
+  { name: "Investment", value: "investment" },
   { name: "Other", value: "other" },
 ];
 
@@ -37,7 +45,12 @@ const AddTransaction = () => {
   });
   const [note, setNote] = useState<string>("");
   const [time, setTime] = useState(new Date());
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
+  const transactionTypeString =
+    String(type).charAt(0).toUpperCase() + String(type).slice(1);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const CATEGORIES = type == "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -72,7 +85,7 @@ const AddTransaction = () => {
       note,
       date: time,
       category: category.value,
-      amount: -parseFloat(value),
+      amount: type == "income" ? parseFloat(value) : -parseFloat(value),
     };
 
     addTransaction(formData);
@@ -82,7 +95,9 @@ const AddTransaction = () => {
     <div className="h-screen w-full center-col gap-24 py-16">
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
-          <p className="text-xl leading-[120%] font-bold">Add Expense</p>
+          <p className="text-xl leading-[120%] font-bold">
+            Add {transactionTypeString}
+          </p>
           <div className="w-full center-col gap-2">
             <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
               <p className="text-lg">$</p>

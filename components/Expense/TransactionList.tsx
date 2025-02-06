@@ -27,6 +27,7 @@ const TransactionList = async () => {
             key={transaction.id}
             amount={transaction.amount}
             date={transaction.date}
+            id={transaction.id}
           />
         ))}
       </div>

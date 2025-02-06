@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 
 interface ButtonProps {
   disabled?: boolean;
-  styleSet?: "gradient";
+  styleSet?: "gradient" | "dark";
   size?: "defaultSize";
   edge?: "defaultEdge" | "rounded";
   onClick?(): void;
@@ -20,6 +20,7 @@ const CustomButton = ({
   const styleSets = {
     gradient:
       "main-gradient text-white hover:bg-brand-orange main-gradient-hover",
+    dark: "bg-black text-white hover:bg-slate-800",
   };
 
   const sizeSets = {

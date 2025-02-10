@@ -26,7 +26,9 @@ const ExpenseItem = ({ value, text }: ExpenseDetails) => {
       </div>
       <div className="flex-col flex gap-1.5">
         <p className="text-xs leading-[100%]">{text}</p>
-        <p className="text-base font-bold leading-[100%]">{value?.toFixed(2)}</p>
+        <p className="text-base font-bold leading-[100%]">
+          {value?.toFixed(2)}
+        </p>
       </div>
     </div>
   );
@@ -46,8 +48,6 @@ const ExpenseSummary = async () => {
     return null;
   }
 
-  console.log(data[0]);
-
   return (
     <div className="w-full max-w-[400px] center-col gap-7 px-5 py-8 rounded-[30px] main-gradient">
       <div className="text-white center-col gap-2.5">
@@ -60,7 +60,6 @@ const ExpenseSummary = async () => {
         </p>
       </div>
       <div className="w-full flex flex-wrap justify-between">
-
         <ExpenseItem value={data[0]?.total_income || 0} text="Income" />
         <ExpenseItem value={data[0]?.total_expense || 0} text="Expense" />
       </div>

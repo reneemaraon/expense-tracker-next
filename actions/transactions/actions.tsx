@@ -55,15 +55,17 @@ export async function editTransaction(transaction: Transaction) {
 }
 
 export async function deleteTransaction(id: number) {
-  const supabase = createClient();
+  console.log("hi");
+  const supabase = await createClient();
 
-  const { error } = await supabase.from("transactions").delete().eq("id", id);
+  const response = await supabase.from("transactions").delete().eq("id", id);
+  console.log(response);
 
-  if (error) {
-    throw new Error(error.message);
+  if (response.error) {
+    throw new Error(response.error.message);
   }
 
-  revalidatePath("/");
+  redirect("/");
 }
 
 export async function deleteCompletedTransactions() {
@@ -78,7 +80,7 @@ export async function deleteCompletedTransactions() {
     throw new Error(error.message);
   }
 
-  revalidatePath("/");
+  redirect("/");
 }
 
 export async function deleteAllTransactions() {

@@ -4,7 +4,9 @@ import CustomButton from "@/components/common/Button";
 // import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import capitalizeString from "@/lib/capitalize";
-import TransactionDetailLoading from "@/components/ExpenseDetail/LoadingPage";
+import TransactionDetailLoading from "@/components/TransactionDetail/LoadingPage";
+import { deleteTransaction } from "@/actions/transactions/actions";
+import DeleteTransaction from "@/components/TransactionDetail/DeleteTransaction";
 
 interface DetailBoxProps {
   children: ReactNode;
@@ -25,7 +27,7 @@ const TransactionDetail = async ({ params }) => {
   const supabase = await createClient();
 
   //   const router = useRouter();
-  const id = params.id;
+  const id = (await params).id;
 
   const { data: transaction, error } = await supabase
     .from("transactions")
@@ -82,7 +84,7 @@ const TransactionDetail = async ({ params }) => {
           </div>
           <div className="center-col gap-5 w-full">
             <CustomButton>Edit</CustomButton>
-            <CustomButton styleSet="dark">Delete</CustomButton>
+            <DeleteTransaction id={id} />
           </div>
         </div>
       </div>

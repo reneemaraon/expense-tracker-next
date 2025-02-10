@@ -1,9 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, Suspense } from "react";
 import { LabelIcon, NoteIcon, TimeIcon } from "@/assets/Icons";
 import CustomButton from "@/components/common/Button";
 // import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import capitalizeString from "@/lib/capitalize";
+import TransactionDetailLoading from "@/components/ExpenseDetail/LoadingPage";
 
 interface DetailBoxProps {
   children: ReactNode;
@@ -43,45 +44,49 @@ const TransactionDetail = async ({ params }) => {
   };
 
   return (
-    <div className="h-screen w-full center-col gap-24 py-16">
-      <div className="center-col gap-10 w-full">
-        <div className="center-col gap-8">
-          <p className="text-xl leading-[120%] font-bold">Transaction Detail</p>
-          <div className="w-full center-col gap-2">
-            <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
-              <p className="text-lg">$</p>
-              <div className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold">
-                {transaction.amount}
+    <Suspense fallback={<TransactionDetailLoading />}>
+      <div className="h-screen w-full center-col gap-24 py-16">
+        <div className="center-col gap-10 w-full">
+          <div className="center-col gap-8">
+            <p className="text-xl leading-[120%] font-bold">
+              Transaction Detail
+            </p>
+            <div className="w-full center-col gap-2">
+              <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
+                <p className="text-lg">$</p>
+                <div className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold">
+                  {transaction.amount}
+                </div>
               </div>
             </div>
+            <div className="w-full max-w-[400px] center-col gap-5">
+              <DetailBox>
+                <div className="w-5 text-light-gray-text">
+                  <LabelIcon />
+                </div>
+                {capitalizeString(transaction.category)}
+              </DetailBox>
+              <DetailBox>
+                <div className="w-5 text-light-gray-text">
+                  <NoteIcon />
+                </div>
+                {transaction.note}
+              </DetailBox>
+              <DetailBox>
+                <div className="w-5 text-light-gray-text">
+                  <TimeIcon />
+                </div>
+                {date.toLocaleDateString("en-US", options)}
+              </DetailBox>
+            </div>
           </div>
-          <div className="w-full max-w-[400px] center-col gap-5">
-            <DetailBox>
-              <div className="w-5 text-light-gray-text">
-                <LabelIcon />
-              </div>
-              {capitalizeString(transaction.category)}
-            </DetailBox>
-            <DetailBox>
-              <div className="w-5 text-light-gray-text">
-                <NoteIcon />
-              </div>
-              {transaction.note}
-            </DetailBox>
-            <DetailBox>
-              <div className="w-5 text-light-gray-text">
-                <TimeIcon />
-              </div>
-              {date.toLocaleDateString("en-US", options)}
-            </DetailBox>
+          <div className="center-col gap-5 w-full">
+            <CustomButton>Edit</CustomButton>
+            <CustomButton styleSet="dark">Delete</CustomButton>
           </div>
-        </div>
-        <div className="center-col gap-5 w-full">
-          <CustomButton>Edit</CustomButton>
-          <CustomButton styleSet="dark">Delete</CustomButton>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 

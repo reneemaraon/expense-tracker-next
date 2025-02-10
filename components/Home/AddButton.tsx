@@ -1,8 +1,8 @@
 "use client";
 import { AddIcon } from "@/assets/Icons";
-import Dropdown, { Option } from "../common/Dropdown";
-import { redirect } from "next/navigation";
+import Dropdown from "../common/Dropdown";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 function AddButton() {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
@@ -31,14 +31,18 @@ function AddButton() {
         {showDropDown && (
           <div className="absolute bottom-full left-0 mx-auto mb-3 w-44">
             <Dropdown>
-              <Option
-                text="Add Expense"
-                onSelect={() => redirect("/transactions/add?type=expense")}
-              />
-              <Option
-                text="Add Income"
-                onSelect={() => redirect("/transactions/add?type=income")}
-              />
+              <Link
+                className="cursor-pointer w-full h-12 px-4 py-2.5 hover:bg-white rounded-lg justify-between items-center inline-flex"
+                href="/transactions/add?type=expense"
+              >
+                Add Expense
+              </Link>
+              <Link
+                className="cursor-pointer w-full h-12 px-4 py-2.5 hover:bg-white rounded-lg justify-between items-center inline-flex"
+                href="/transactions/add?type=income"
+              >
+                Add Income
+              </Link>
             </Dropdown>
           </div>
         )}

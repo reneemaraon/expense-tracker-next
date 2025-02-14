@@ -35,8 +35,8 @@ export async function addTransaction(formData: AddTransactionData) {
   redirect("/");
 }
 
-export async function editTransaction(transaction: Transaction) {
-  const supabase = createClient();
+export async function editTransaction(transaction: any) {
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -44,7 +44,7 @@ export async function editTransaction(transaction: Transaction) {
 
   const { error } = await supabase
     .from("transactions")
-    .update({ task: transaction.task })
+    .update(transaction)
     .eq("id", transaction.id)
     .eq("user_id", user?.id)
     .select();
@@ -52,6 +52,7 @@ export async function editTransaction(transaction: Transaction) {
   if (error) {
     throw new Error(error.message);
   }
+  redirect(`/transactions/${transaction.id}`);
 }
 
 export async function deleteTransaction(id: number) {
@@ -69,7 +70,7 @@ export async function deleteTransaction(id: number) {
 }
 
 export async function deleteCompletedTransactions() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from("transactions")
@@ -84,7 +85,7 @@ export async function deleteCompletedTransactions() {
 }
 
 export async function deleteAllTransactions() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

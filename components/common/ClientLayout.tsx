@@ -28,6 +28,7 @@ const ClientLayout = ({ children }: Props) => {
           </div>
         )}
         {!isLoading && children}
+        {/* {children} */}
       </div>
     </div>
   );

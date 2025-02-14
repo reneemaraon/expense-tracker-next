@@ -7,50 +7,54 @@ import { LabelIcon, NoteIcon } from "@/assets/Icons";
 import CustomButton from "@/components/common/Button";
 import SelectInput from "@/components/common/SelectInput";
 import { DateTimePicker } from "@/components/AddExpense/TimeSelect";
-import { addTransaction } from "@/actions/transactions/actions";
-import { useSearchParams } from "next/navigation";
+import { editTransaction } from "@/actions/transactions/actions";
+import {
+  EXPENSE_CATEGORIES,
+  INCOME_CATEGORIES,
+} from "@/app/transactions/add/page";
+import { Transaction } from "@/lib/interface";
 
 interface CategoryOption {
   name: string;
   value: string;
 }
 
-export interface AddTransactionData {
+interface EditTransactionProps {
+  transaction: Transaction;
+}
+
+export interface EditTransactionData {
   note: string;
   category: string;
   date: Date;
   amount: number;
+  id: number;
 }
 
-export const EXPENSE_CATEGORIES = [
-  { name: "Food", value: "food" },
-  { name: "Shopping", value: "shopping" },
-  { name: "Travel", value: "travel" },
-  { name: "Bills", value: "bills" },
-  { name: "Other", value: "other" },
-];
+const EditTransaction = ({ transaction }: EditTransactionProps) => {
+  const {
+    amount,
+    date: initialDate,
+    category: initialCategory,
+    note: initialNote,
+    id,
+  } = transaction;
+  const [value, setValue] = useState<string>(Math.abs(amount).toString());
+  const type = amount > 0 ? "income" : "expense";
+  const CATEGORIES = type == "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+  const [category, setCategory] = useState<CategoryOption>(
+    CATEGORIES.find((cat: any) => cat.value == initialCategory) || {
+      name: "",
+      value: "",
+    }
+  );
 
-export const INCOME_CATEGORIES = [
-  { name: "Salary", value: "salary" },
-  { name: "Allowance", value: "allowance" },
-  { name: "Investment", value: "investment" },
-  { name: "Other", value: "other" },
-];
+  const [note, setNote] = useState<string>(initialNote);
+  const [time, setTime] = useState(new Date(initialDate));
 
-const AddTransaction = () => {
-  const [value, setValue] = useState<string>("");
-  const [category, setCategory] = useState<CategoryOption>({
-    name: "",
-    value: "",
-  });
-  const [note, setNote] = useState<string>("");
-  const [time, setTime] = useState(new Date());
-  const searchParams = useSearchParams();
-  const type = searchParams.get("type");
   const transactionTypeString =
     String(type).charAt(0).toUpperCase() + String(type).slice(1);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const CATEGORIES = type == "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -81,14 +85,15 @@ const AddTransaction = () => {
       return; // Stop submission if form is invalid
     }
 
-    const formData: AddTransactionData = {
+    const formData: EditTransactionData = {
+      id,
       note,
       date: time,
       category: category.value,
       amount: type == "income" ? parseFloat(value) : -parseFloat(value),
     };
 
-    addTransaction(formData);
+    editTransaction(formData);
   };
 
   return (
@@ -96,7 +101,7 @@ const AddTransaction = () => {
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
           <p className="text-xl leading-[120%] font-bold">
-            Add {transactionTypeString}
+            Edit {transactionTypeString}
           </p>
           <div className="w-full center-col gap-2">
             <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
@@ -120,7 +125,7 @@ const AddTransaction = () => {
             error={errors.category}
             placeholder="Category"
             value={category}
-            options={CATEGORIES.map((categoryOption) => ({
+            options={CATEGORIES.map((categoryOption: any) => ({
               text: categoryOption.name,
               onSelect: () => setCategory(categoryOption),
               selected: category.value == categoryOption.value,
@@ -147,4 +152,4 @@ const AddTransaction = () => {
   );
 };
 
-export default AddTransaction;
+export default EditTransaction;

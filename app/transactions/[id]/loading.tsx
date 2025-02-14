@@ -1,3 +1,4 @@
+import React from "react";
 import CustomButton from "@/components/common/Button";
 
 export const LoadingDetailBox = () => (
@@ -11,9 +12,7 @@ const TransactionDetailLoading = () => {
     <div className="h-screen w-full center-col gap-24 py-16">
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
-          <p className="text-xl leading-[120%] font-bold text-transparent bg-light-gray-text">
-            Transaction Detail
-          </p>
+          <p className="text-xl leading-[120%] font-bold">Transaction Detail</p>
           <div className="w-full center-col gap-2">
             <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center"></div>
           </div>

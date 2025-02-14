@@ -4,12 +4,18 @@ import CustomButton from "@/components/common/Button";
 // import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import capitalizeString from "@/lib/capitalize";
-import TransactionDetailLoading from "@/components/TransactionDetail/LoadingPage";
-import { deleteTransaction } from "@/actions/transactions/actions";
 import DeleteTransaction from "@/components/TransactionDetail/DeleteTransaction";
+import { redirect } from "next/navigation";
+import EditTransactionButton from "@/components/TransactionDetail/EditTransaction";
 
 interface DetailBoxProps {
   children: ReactNode;
+}
+
+interface TransactionDetailProps {
+  params: {
+    id: number;
+  };
 }
 
 const DetailBox = ({ children }: DetailBoxProps) => (
@@ -23,10 +29,9 @@ const DetailBox = ({ children }: DetailBoxProps) => (
   </div>
 );
 
-const TransactionDetail = async ({ params }) => {
+const TransactionDetail = async ({ params }: TransactionDetailProps) => {
   const supabase = await createClient();
 
-  //   const router = useRouter();
   const id = (await params).id;
 
   const { data: transaction, error } = await supabase
@@ -38,7 +43,7 @@ const TransactionDetail = async ({ params }) => {
 
   //   console.log(transaction);
   const date = new Date(transaction?.date);
-  var options = {
+  var options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -46,21 +51,22 @@ const TransactionDetail = async ({ params }) => {
   };
 
   return (
-    <Suspense fallback={<TransactionDetailLoading />}>
-      <div className="h-screen w-full center-col gap-24 py-16">
-        <div className="center-col gap-10 w-full">
-          <div className="center-col gap-8">
-            <p className="text-xl leading-[120%] font-bold">
-              Transaction Detail
-            </p>
-            <div className="w-full center-col gap-2">
-              <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
-                <p className="text-lg">$</p>
-                <div className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold">
+    <div className="h-screen w-full center-col gap-24 py-16">
+      <div className="center-col gap-10 w-full">
+        <div className="center-col gap-8">
+          <p className="text-xl leading-[120%] font-bold">Transaction Detail</p>
+          <div className="w-full center-col gap-2">
+            <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
+              <p className="text-lg">$</p>
+
+              <div className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold">
+                <Suspense fallback={<p>Loading...</p>}>
                   {transaction.amount}
-                </div>
+                </Suspense>
               </div>
             </div>
+          </div>
+          <Suspense fallback={<p>Loading...</p>}>
             <div className="w-full max-w-[400px] center-col gap-5">
               <DetailBox>
                 <div className="w-5 text-light-gray-text">
@@ -81,14 +87,14 @@ const TransactionDetail = async ({ params }) => {
                 {date.toLocaleDateString("en-US", options)}
               </DetailBox>
             </div>
-          </div>
-          <div className="center-col gap-5 w-full">
-            <CustomButton>Edit</CustomButton>
-            <DeleteTransaction id={id} />
-          </div>
+          </Suspense>
+        </div>
+        <div className="center-col gap-5 w-full">
+          <EditTransactionButton id={id} />
+          <DeleteTransaction id={id} />
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 };
 

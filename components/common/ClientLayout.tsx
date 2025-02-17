@@ -9,26 +9,26 @@ interface Props {
 }
 
 const ClientLayout = ({ children }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const pathname = usePathname();
 
-  useEffect(() => {
-    setIsLoading(true); // Trigger loading state
-    const timeout = setTimeout(() => setIsLoading(false), 300); // Simulate delay for route change
+  // useEffect(() => {
+  //   setIsLoading(true); // Trigger loading state
+  //   const timeout = setTimeout(() => setIsLoading(false), 300); // Simulate delay for route change
 
-    return () => clearTimeout(timeout);
-  }, [pathname]); // Detect route changes based on pathname
+  //   return () => clearTimeout(timeout);
+  // }, [pathname]); // Detect route changes based on pathname
 
   return (
     <div className="w-full min-h-screen font-inter center-col overflow-y-scroll bg-darker-bg leading-[100%]">
       <div className="p-5 sm:p-7 max-w-[800px] min-h-[100vw] h-full w-full bg-white-bg center-col">
-        {isLoading && (
+        {/* {isLoading && (
           <div className="center-col justify-center w-full h-full">
             <LoadingSpinner />
           </div>
-        )}
-        {!isLoading && children}
-        {/* {children} */}
+        )} */}
+        {/* {!isLoading && children} */}
+        {children}
       </div>
     </div>
   );

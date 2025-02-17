@@ -13,6 +13,7 @@ import {
   INCOME_CATEGORIES,
 } from "@/app/transactions/add/page";
 import { Transaction } from "@/lib/interface";
+import GoBackButton from "../common/GoBackButton";
 
 interface CategoryOption {
   name: string;
@@ -97,7 +98,8 @@ const EditTransaction = ({ transaction }: EditTransactionProps) => {
   };
 
   return (
-    <div className="h-screen w-full center-col gap-24 py-16">
+    <div className="relative h-screen w-full center-col gap-24 py-16">
+      <GoBackButton />
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
           <p className="text-xl leading-[120%] font-bold">

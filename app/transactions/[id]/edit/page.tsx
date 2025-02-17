@@ -1,6 +1,6 @@
-import React from "react";
-import EditTransaction from "@/components/EditTransaction/EditTransaction";
-import { createClient } from "@/utils/supabase/server";
+import React, { Suspense } from "react";
+import EditTransactionWrapper from "./EditTransactionWrapper";
+import TransactionDetailLoading from "@/components/TransactionDetail/LoadingPage";
 
 interface EditTransactionProps {
   params: {
@@ -8,17 +8,13 @@ interface EditTransactionProps {
   };
 }
 const EditTransactionPage = async ({ params }: EditTransactionProps) => {
-  const supabase = await createClient();
   const id = (await params).id;
 
-  const { data: transaction } = await supabase
-    .from("transactions")
-    .select("*")
-    .eq("id", id)
-    .limit(1)
-    .single();
-
-  return <EditTransaction transaction={transaction} />;
+  return (
+    <Suspense fallback={<TransactionDetailLoading />}>
+      <EditTransactionWrapper id={id} />;
+    </Suspense>
+  );
 };
 
 export default EditTransactionPage;

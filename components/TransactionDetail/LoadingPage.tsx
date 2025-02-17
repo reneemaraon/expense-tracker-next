@@ -11,7 +11,7 @@ const TransactionDetailLoading = () => {
     <div className="h-screen w-full center-col gap-24 py-16">
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
-          <p className="text-xl leading-[120%] font-bold text-transparent bg-light-gray-text">
+          <p className="text-xl leading-[120%] font-bold text-transparent bg-slate-100">
             Transaction Detail
           </p>
           <div className="w-full center-col gap-2">
@@ -23,10 +23,10 @@ const TransactionDetailLoading = () => {
             <LoadingDetailBox />
           </div>
         </div>
-        <div className="center-col gap-5 w-full">
+        {/* <div className="center-col gap-5 w-full">
           <CustomButton>Edit</CustomButton>
           <CustomButton styleSet="dark">Delete</CustomButton>
-        </div>
+        </div> */}
       </div>
     </div>
   );

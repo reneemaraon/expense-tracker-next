@@ -1,12 +1,10 @@
 import React, { ReactNode, Suspense } from "react";
 import { LabelIcon, NoteIcon, TimeIcon } from "@/assets/Icons";
-import CustomButton from "@/components/common/Button";
-// import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import capitalizeString from "@/lib/capitalize";
 import DeleteTransaction from "@/components/TransactionDetail/DeleteTransaction";
-import { redirect } from "next/navigation";
 import EditTransactionButton from "@/components/TransactionDetail/EditTransaction";
+import GoBackButton from "@/components/common/GoBackButton";
 
 interface DetailBoxProps {
   children: ReactNode;
@@ -51,7 +49,8 @@ const TransactionDetail = async ({ params }: TransactionDetailProps) => {
   };
 
   return (
-    <div className="h-screen w-full center-col gap-24 py-16">
+    <div className="relative h-screen w-full center-col gap-24 py-16">
+      <GoBackButton />
       <div className="center-col gap-10 w-full">
         <div className="center-col gap-8">
           <p className="text-xl leading-[120%] font-bold">Transaction Detail</p>

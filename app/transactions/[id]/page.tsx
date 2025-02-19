@@ -10,10 +10,10 @@ interface DetailBoxProps {
   children: ReactNode;
 }
 
+type Params = Promise<{ id: string }>;
+
 interface TransactionDetailProps {
-  params: {
-    id: number;
-  };
+  params: Params;
 }
 
 const DetailBox = ({ children }: DetailBoxProps) => (

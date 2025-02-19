@@ -23,11 +23,13 @@ export default async function Home() {
       <div className="w-full flex">
         <div className="w-full gap-3 flex items-center">
           <div className="bg-yellow-500 w-10 h-10 rounded-full overflow-hidden">
-            <img
-              src={user?.user_metadata.avatar_url || ""}
-              className="w-full h-full object-cover"
-              alt=""
-            />
+            {user && user.user_metadata.avatar_url && (
+              <img
+                src={user?.user_metadata.avatar_url}
+                className="w-full h-full object-cover"
+                alt=""
+              />
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <p className="text-xs leading-[100%] text-light-gray-text font-bold">

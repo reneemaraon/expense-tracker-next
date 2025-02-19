@@ -3,7 +3,7 @@ import EditTransaction from "@/components/EditTransaction/EditTransaction";
 import { createClient } from "@/utils/supabase/server";
 
 interface EditTransactionProps {
-  id: number;
+  id: string;
 }
 const EditTransactionWrapper = async ({ id }: EditTransactionProps) => {
   const supabase = await createClient();

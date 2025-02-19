@@ -2,12 +2,9 @@ import React, { Suspense } from "react";
 import EditTransactionWrapper from "./EditTransactionWrapper";
 import TransactionDetailLoading from "@/components/TransactionDetail/LoadingPage";
 
-interface EditTransactionProps {
-  params: {
-    id: number;
-  };
-}
-const EditTransactionPage = async ({ params }: EditTransactionProps) => {
+type Params = Promise<{ id: string }>;
+
+const EditTransactionPage = async ({ params }: { params: Params }) => {
   const id = (await params).id;
 
   return (

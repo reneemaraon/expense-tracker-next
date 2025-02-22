@@ -7,3 +7,10 @@ export interface Transaction {
   note: string;
   date: Date;
 }
+
+export interface AddTransactionData {
+  note: string;
+  category: string;
+  date: Date;
+  amount: number;
+}

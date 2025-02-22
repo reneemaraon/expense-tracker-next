@@ -4,7 +4,7 @@ import CustomButton from "../common/Button";
 import { useRouter } from "next/navigation";
 
 interface EditTransactionProps {
-  id: number;
+  id: string;
 }
 
 function EditTransactionButton({ id }: EditTransactionProps) {

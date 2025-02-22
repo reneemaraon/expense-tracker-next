@@ -6,7 +6,7 @@ import Link from "next/link";
 
 function AddButton() {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropDown = () => {
     setShowDropDown((prevValue) => !prevValue);

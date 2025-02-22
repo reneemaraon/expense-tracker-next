@@ -14,7 +14,12 @@ import {
 import { TimePickerDemo } from "@/components/ui/time-picker-demo";
 import { TimeIcon } from "@/assets/Icons";
 
-export function DateTimePicker({ date, setDate }) {
+interface Props {
+  date: Date | undefined;
+  setDate: (date: Date | undefined) => void;
+}
+
+export function DateTimePicker({ date, setDate }: Props) {
   /**
    * carry over the current time when a user clicks a new day
    * instead of resetting to 00:00

@@ -1,7 +1,7 @@
 "use client";
 
 import TextInput from "@/components/common/TextInput";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { LabelIcon, NoteIcon } from "@/assets/Icons";
 import CustomButton from "@/components/common/Button";
@@ -9,33 +9,14 @@ import SelectInput from "@/components/common/SelectInput";
 import { DateTimePicker } from "@/components/AddExpense/TimeSelect";
 import { addTransaction } from "@/actions/transactions/actions";
 import { useSearchParams } from "next/navigation";
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/constants";
+import { AddTransactionData } from "@/lib/interface";
+import TransactionDetailLoading from "../[id]/loading";
 
 interface CategoryOption {
   name: string;
   value: string;
 }
-
-export interface AddTransactionData {
-  note: string;
-  category: string;
-  date: Date;
-  amount: number;
-}
-
-export const EXPENSE_CATEGORIES = [
-  { name: "Food", value: "food" },
-  { name: "Shopping", value: "shopping" },
-  { name: "Travel", value: "travel" },
-  { name: "Bills", value: "bills" },
-  { name: "Other", value: "other" },
-];
-
-export const INCOME_CATEGORIES = [
-  { name: "Salary", value: "salary" },
-  { name: "Allowance", value: "allowance" },
-  { name: "Investment", value: "investment" },
-  { name: "Other", value: "other" },
-];
 
 const AddTransaction = () => {
   const [value, setValue] = useState<string>("");
@@ -92,58 +73,63 @@ const AddTransaction = () => {
   };
 
   return (
-    <div className="h-screen w-full center-col gap-24 py-16">
-      <div className="center-col gap-10 w-full">
-        <div className="center-col gap-8">
-          <p className="text-xl leading-[120%] font-bold">
-            Add {transactionTypeString}
-          </p>
-          <div className="w-full center-col gap-2">
-            <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
-              <p className="text-lg">$</p>
-              <input
-                type="text"
-                value={value}
-                onChange={handleInputChange}
-                className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold"
-                placeholder="0.00"
-              />
+    <Suspense fallback={<TransactionDetailLoading />}>
+      <div className="h-screen w-full center-col gap-24 py-16">
+        <div className="center-col gap-10 w-full">
+          <div className="center-col gap-8">
+            <p className="text-xl leading-[120%] font-bold">
+              Add {transactionTypeString}
+            </p>
+            <div className="w-full center-col gap-2">
+              <div className="w-[280px] px-4 bg-white h-[72px] rounded-full flex items-center">
+                <p className="text-lg">$</p>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={handleInputChange}
+                  className="text-[44px] bg-white w-full text-center focus:outline-none focus:placeholder-transparent bg-transparent font-semibold"
+                  placeholder="0.00"
+                />
+              </div>
+              {errors.amount && (
+                <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
+              )}
             </div>
-            {errors.amount && (
-              <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
-            )}
+          </div>
+          <div className="w-full max-w-[400px] center-col gap-5">
+            <SelectInput
+              icon
+              error={errors.category}
+              placeholder="Category"
+              value={category}
+              options={CATEGORIES.map((categoryOption) => ({
+                text: categoryOption.name,
+                onSelect: () => setCategory(categoryOption),
+                selected: category.value == categoryOption.value,
+              }))}
+            >
+              <LabelIcon />
+            </SelectInput>
+
+            <TextInput
+              value={note}
+              placeholder="Note"
+              icon={true}
+              error={errors.note}
+              onValueChange={setNote}
+            >
+              <NoteIcon />
+            </TextInput>
+
+            <DateTimePicker
+              date={time}
+              setDate={(date) => date && setTime(date)}
+            />
           </div>
         </div>
-        <div className="w-full max-w-[400px] center-col gap-5">
-          <SelectInput
-            icon
-            error={errors.category}
-            placeholder="Category"
-            value={category}
-            options={CATEGORIES.map((categoryOption) => ({
-              text: categoryOption.name,
-              onSelect: () => setCategory(categoryOption),
-              selected: category.value == categoryOption.value,
-            }))}
-          >
-            <LabelIcon />
-          </SelectInput>
-
-          <TextInput
-            value={note}
-            placeholder="Note"
-            icon={true}
-            error={errors.note}
-            onValueChange={setNote}
-          >
-            <NoteIcon />
-          </TextInput>
-
-          <DateTimePicker date={time} setDate={setTime} />
-        </div>
+        <CustomButton onClick={handleSubmit}>SAVE</CustomButton>
       </div>
-      <CustomButton onClick={handleSubmit}>SAVE</CustomButton>
-    </div>
+    </Suspense>
   );
 };
 

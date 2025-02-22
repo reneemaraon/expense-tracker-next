@@ -8,12 +8,9 @@ import CustomButton from "@/components/common/Button";
 import SelectInput from "@/components/common/SelectInput";
 import { DateTimePicker } from "@/components/AddExpense/TimeSelect";
 import { editTransaction } from "@/actions/transactions/actions";
-import {
-  EXPENSE_CATEGORIES,
-  INCOME_CATEGORIES,
-} from "@/app/transactions/add/page";
 import { Transaction } from "@/lib/interface";
 import GoBackButton from "../common/GoBackButton";
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/constants";
 
 interface CategoryOption {
   name: string;
@@ -146,7 +143,10 @@ const EditTransaction = ({ transaction }: EditTransactionProps) => {
             <NoteIcon />
           </TextInput>
 
-          <DateTimePicker date={time} setDate={setTime} />
+          <DateTimePicker
+            date={time}
+            setDate={(date) => date && setTime(date)}
+          />
         </div>
       </div>
       <CustomButton onClick={handleSubmit}>SAVE</CustomButton>

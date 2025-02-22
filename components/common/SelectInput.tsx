@@ -23,7 +23,7 @@ const SelectInput = ({
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
   };
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const valueSelected = value.value.length > 0;
 
   const handleOutsideClick = (event: { target: any }) => {

@@ -6,7 +6,7 @@ import { logout } from "@/actions/actions";
 
 const TopMenu = () => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropDown = () => {
     setShowDropDown((prevValue) => !prevValue);

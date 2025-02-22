@@ -4,7 +4,7 @@ import CustomButton from "../common/Button";
 import { deleteTransaction } from "@/actions/transactions/actions";
 
 interface DeleteTransactionProps {
-  id: number;
+  id: string;
 }
 
 function DeleteTransaction({ id }: DeleteTransactionProps) {

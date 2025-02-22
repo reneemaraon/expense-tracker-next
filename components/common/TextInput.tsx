@@ -22,7 +22,7 @@ const TextInput = ({
 }: TextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const focusInput = () => {
     if (inputRef.current) {

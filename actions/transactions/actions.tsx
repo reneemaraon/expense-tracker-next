@@ -5,8 +5,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { Transaction } from "@/lib/interface";
-import { AddTransactionData } from "@/app/transactions/add/page";
+import { AddTransactionData, Transaction } from "@/lib/interface";
 
 export async function addTransaction(formData: AddTransactionData) {
   const supabase = await createClient();
@@ -55,7 +54,7 @@ export async function editTransaction(transaction: any) {
   redirect(`/transactions/${transaction.id}`);
 }
 
-export async function deleteTransaction(id: number) {
+export async function deleteTransaction(id: string) {
   console.log("hi");
   const supabase = await createClient();
 

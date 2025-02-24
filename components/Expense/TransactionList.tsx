@@ -18,7 +18,7 @@ const TransactionList = async () => {
         <p className="w-full text-lg font-medium leading-[100%]">
           Transactions
         </p>
-        <p className="text-sm leading-[100%] text-light-gray-text">Today</p>
+        {/* <p className="text-sm leading-[100%] text-light-gray-text">Today</p> */}
       </div>
       <div className="w-full flex-col flex gap-5">
         {transactions?.map((transaction) => (

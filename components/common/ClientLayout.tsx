@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import LoadingSpinner from "./Loading";
 
 interface Props {
@@ -28,7 +28,15 @@ const ClientLayout = ({ children }: Props) => {
           </div>
         )} */}
         {/* {!isLoading && children} */}
-        {children}
+        <Suspense
+          fallback={
+            <div className="center-col justify-center w-full h-full">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          {children}
+        </Suspense>
       </div>
     </div>
   );

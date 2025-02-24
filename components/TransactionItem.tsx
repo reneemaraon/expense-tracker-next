@@ -60,9 +60,6 @@ const TransactionItem = ({
   date,
   id,
 }: TransactionItemProps) => {
-  const validDate =
-    date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
-
   const redirectToDetail = () => {
     redirect(`/transactions/${id}`);
   };
@@ -88,7 +85,7 @@ const TransactionItem = ({
         <p>
           {amount < 0 ? "-" : ""}${Math.abs(amount || 0).toFixed(2)}
         </p>
-        <p className="text-light-gray-text">{formatDateTime(validDate)}</p>
+        <p className="text-light-gray-text">{formatDateTime(date)}</p>
       </div>
     </Link>
   );
